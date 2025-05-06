@@ -33,10 +33,10 @@ AccelerometerTrusted_node1745979555851 = glueContext.create_dynamic_frame.from_c
 StepTrainerTrusted_node1746057240433 = glueContext.create_dynamic_frame.from_catalog(database="d609", table_name="step_trainer_trusted", transformation_ctx="StepTrainerTrusted_node1746057240433")
 
 # Script generated for node SQL Query
-SqlQuery3566 = '''
+SqlQuery3850 = '''
 SELECT * from step_trainer_trusted join accelerometer_trusted on accelerometer_trusted.timestamp = step_trainer_trusted.sensorreadingtime
 '''
-SQLQuery_node1746226406598 = sparkSqlQuery(glueContext, query = SqlQuery3566, mapping = {"accelerometer_trusted":AccelerometerTrusted_node1745979555851, "step_trainer_trusted":StepTrainerTrusted_node1746057240433}, transformation_ctx = "SQLQuery_node1746226406598")
+SQLQuery_node1746226406598 = sparkSqlQuery(glueContext, query = SqlQuery3850, mapping = {"accelerometer_trusted":AccelerometerTrusted_node1745979555851, "step_trainer_trusted":StepTrainerTrusted_node1746057240433}, transformation_ctx = "SQLQuery_node1746226406598")
 
 # Script generated for node Amazon S3
 EvaluateDataQuality().process_rows(frame=SQLQuery_node1746226406598, ruleset=DEFAULT_DATA_QUALITY_RULESET, publishing_options={"dataQualityEvaluationContext": "EvaluateDataQuality_node1746057234838", "enableDataQualityResultsPublishing": True}, additional_options={"dataQualityResultsPublishing.strategy": "BEST_EFFORT", "observations.scope": "ALL"})

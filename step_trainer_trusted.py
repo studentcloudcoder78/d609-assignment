@@ -27,16 +27,16 @@ DEFAULT_DATA_QUALITY_RULESET = """
 """
 
 # Script generated for node Data Source Customers
-DataSourceCustomers_node1745979555851 = glueContext.create_dynamic_frame.from_catalog(database="d609", table_name="customer_trusted", transformation_ctx="DataSourceCustomers_node1745979555851")
+DataSourceCustomers_node1745979555851 = glueContext.create_dynamic_frame.from_catalog(database="d609", table_name="customers_curated", transformation_ctx="DataSourceCustomers_node1745979555851")
 
 # Script generated for node Data Source Step Trainer
 DataSourceStepTrainer_node1746057240433 = glueContext.create_dynamic_frame.from_options(format_options={"multiLine": "false"}, connection_type="s3", format="json", connection_options={"paths": ["s3://michael-brown-d609/step_trainer/landing/"], "recurse": True}, transformation_ctx="DataSourceStepTrainer_node1746057240433")
 
 # Script generated for node SQL Query
-SqlQuery3568 = '''
-select DISTINCT step_trainer_landing.sensorreadingtime, step_trainer_landing.serialnumber, step_trainer_landing.distancefromobject from step_trainer_landing join customers_curated on customers_curated.serialnumber = step_trainer_landing.serialnumber
+SqlQuery4026 = '''
+select step_trainer_landing.sensorreadingtime, step_trainer_landing.serialnumber, step_trainer_landing.distancefromobject from step_trainer_landing join customers_curated on customers_curated.serialnumber = step_trainer_landing.serialnumber
 '''
-SQLQuery_node1746234770256 = sparkSqlQuery(glueContext, query = SqlQuery3568, mapping = {"customers_curated":DataSourceCustomers_node1745979555851, "step_trainer_landing":DataSourceStepTrainer_node1746057240433}, transformation_ctx = "SQLQuery_node1746234770256")
+SQLQuery_node1746234770256 = sparkSqlQuery(glueContext, query = SqlQuery4026, mapping = {"customers_curated":DataSourceCustomers_node1745979555851, "step_trainer_landing":DataSourceStepTrainer_node1746057240433}, transformation_ctx = "SQLQuery_node1746234770256")
 
 # Script generated for node Amazon S3
 EvaluateDataQuality().process_rows(frame=SQLQuery_node1746234770256, ruleset=DEFAULT_DATA_QUALITY_RULESET, publishing_options={"dataQualityEvaluationContext": "EvaluateDataQuality_node1746057234838", "enableDataQualityResultsPublishing": True}, additional_options={"dataQualityResultsPublishing.strategy": "BEST_EFFORT", "observations.scope": "ALL"})
